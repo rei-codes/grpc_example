@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package user;
+option go_package = "./pb";
+
+message User {
+	string id = 1; 
+	string email = 2;      
+} 
+
+message Message {
+	string id = 1;
+	string channel_id = 2;
+	string user_id = 3;
+	string message = 4;
+}
+
+service MyService {
+	rpc ReadUser (ReadUserReq) returns (ReadUserRes);
+	rpc Channel(ChannelReq) returns (stream ChannelRes);
+  rpc Log(stream LogReq) returns (LogRes);
+  rpc Chat(stream ChatReq) returns (stream ChatRes);
+}
+
+message ReadUserReq {
+  string id = 1;
+}
+message ReadUserRes {
+	User user = 1;
+}
+
+message ChannelReq {
+  string channel_id = 1;
+}
+message ChannelRes {
+	Message message = 1;
+}
+
+message LogReq {
+  string log = 1;
+}
+message LogRes {
+}
+
+message ChatReq {
+  Message message = 1;
+}
+message ChatRes {
+	Message message = 1;
+}
